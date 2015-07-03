@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<style>
+			iframe {pointer-events: none;}
 			html, body, h1, p, div {
 				margin: 0;
 				padding: 0;
@@ -29,7 +30,9 @@
 			#next-btn,
 			#prev-btn,
 			#random-btn,
-			#info-btn {
+			#info-btn,
+			#play-btn,
+			#pause-btn {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -61,6 +64,16 @@
 				background: white;
 				color: #000;
 			}
+			#play-btn {
+				top: 144px;
+				background: green;
+				color: #fff;
+			}
+			#pause-btn {
+				top: 168px;
+				background: orange;
+				color: #fff;
+			}
 		</style>
 		<link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
 	</head>
@@ -72,6 +85,7 @@
 		<p id="about-btn">about</p>
 		<p id="contact-btn">contact</p>
 		<p id="info-btn">info</p>
+		<p id="play-btn">pause</p>
 		<div id="info">info text here</div>
 		<div id="about">about text here</div>
 		<div id="contact">contact deets here</div>
@@ -149,6 +163,7 @@
 		<script src="backbone/views/videos/prevbtn.js"></script>
 		<script src="backbone/views/videos/randbtn.js"></script>
 		<script src="backbone/views/videos/infobtn.js"></script>
+		<script src="backbone/views/videos/playbtn.js"></script>
 		<script src="backbone/views/videos/contact.js"></script>
 		<script src="backbone/views/videos/about.js"></script>
 		<script src="backbone/views/videos/heading.js"></script>
@@ -163,6 +178,7 @@
 			window.about = new JuiceVCR.Views.AboutView( { el : $('#about') });
 			window.contact = new JuiceVCR.Views.ContactView( { el : $('#contact') });
 			window.random = new JuiceVCR.Views.RandomButtonView( { el : $('#random-btn') });
+			window.play = new JuiceVCR.Views.PlayButtonView( { el : $('#play-btn') });
 			window.info = new JuiceVCR.Views.InfoButtonView( { el : $('#info-btn') });
 			Backbone.history.start( { pushState : true });
 
