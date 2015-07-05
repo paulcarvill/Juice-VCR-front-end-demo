@@ -11,6 +11,9 @@ JuiceVCR.Views.PlayButtonView = Backbone.View.extend({
       	this.playing = false;
       	$(this.el).text('play');
       	myPlayer1.pause();
+
+        $('.woop').removeClass('woop');
+
       } else {
       	this.playing = true;
       	$(this.el).text('pause');
