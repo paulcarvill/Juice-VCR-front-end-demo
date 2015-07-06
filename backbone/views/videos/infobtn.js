@@ -4,7 +4,6 @@ JuiceVCR.Views.InfoButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      console.log('clicked info');
       $('#info').toggle();
       $('#info').html(window.JuiceVCR.data[currentVideoIndex].id + "<br />" + 
           window.JuiceVCR.data[currentVideoIndex].tracktitle + "<br />" + 

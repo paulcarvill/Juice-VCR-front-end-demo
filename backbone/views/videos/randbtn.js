@@ -4,7 +4,6 @@ JuiceVCR.Views.RandomButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      console.log('clicked random');
       var rand = Math.floor(Math.random() * (window.JuiceVCR.data.length - 0)) + 0;
       console.log(rand);
       if (rand === currentVideoIndex) {

@@ -1,0 +1,142 @@
+html, body, h1, p, div {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-family: Helvetica, arial, sans-serif;
+}
+
+body {
+	background: #555a5e url(/assets/img/bg.gif);
+	border-left: 40px solid #555a5e;
+	border-bottom: 40px solid #555a5e;
+}
+
+/* don't allow pausing the video by clicking directly on it */
+iframe {
+	pointer-events: none;
+}
+
+a {
+	color: #a0a5a8;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#vid1 {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#about,
+#contact {
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: #fff;
+	opacity: 0.9;
+	z-index: 8;
+	color: #000;
+	font-size: 3em;
+	padding: 100px;
+	box-sizing: border-box;
+}
+
+#info {
+	position: absolute;
+	top: 96px;
+	left: 100px;
+	height: auto;
+	width: 50%;
+	z-index: 11;
+	color: #fff;
+}
+
+h1 {
+	position: absolute;
+	z-index: 20;
+	bottom: 260px;
+	left: 40px;
+	color: #fff;
+	fill: currentColor;
+}
+
+#next-btn,
+#prev-btn,
+#random-btn,
+#info-btn,
+#play-btn,
+#pause-btn {
+	z-index: 20;
+	position: absolute;
+	color: #fff;
+	fill: currentColor;
+}
+
+#next-btn:hover,
+#prev-btn:hover,
+#random-btn:hover,
+#info-btn:hover,
+#play-btn:hover,
+#pause-btn:hover {
+	color: #333;
+	fill: currentColor;
+	cursor: pointer;
+}
+
+#btns {
+	color: #a0a5a8;
+	width: 300px;
+	padding-right: 100px;
+	transform-origin: 100% 0;
+	transform: rotate(-90deg);
+	margin-left: -330px;
+	text-align: right;
+	box-sizing: border-box;
+}
+
+#next-btn {
+	top: 48px;
+	right: 100px;
+}
+
+#prev-btn {
+	top: 48px;
+	left: 95px;
+}
+
+#random-btn {
+	left: 115px;
+	bottom: 133px;
+}
+
+#info-btn {
+	left: 115px;
+	bottom: 77px;
+}
+
+#play-btn {
+	left: 115px;
+	bottom: 189px;
+}
+
+#video-player {
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 100px;
+	bottom: 118px;
+	-webkit-transform:translateZ(0);
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+#video-player.woop {
+	left: 0;
+	bottom: 0;
+}

@@ -4,7 +4,6 @@ JuiceVCR.Views.NextButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      console.log('clicked next');
       currentVideoIndex += 1;
       if(currentVideoIndex >= window.JuiceVCR.data.length){
       	currentVideoIndex = 0;
