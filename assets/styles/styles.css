@@ -1,4 +1,4 @@
-html, body, h1, p, div {
+html, body, h1, h2, p, div {
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
@@ -9,6 +9,7 @@ body {
 	background: #555a5e url(/assets/img/bg.gif);
 	border-left: 40px solid #555a5e;
 	border-bottom: 40px solid #555a5e;
+	overflow-x: hidden;
 }
 
 /* don't allow pausing the video by clicking directly on it */
@@ -29,7 +30,7 @@ a:hover {
 	z-index: 20;
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 40px;
 	right: 0;
 	bottom: 0;
 }
@@ -53,34 +54,43 @@ h1,
 }
 
 h1 {
-	-webkit-transition-delay: 300ms;
+	color: #fff;
+	fill: currentColor;
+	/*-webkit-transition-delay: 300ms;*/
+}
+
+h2 {
+	font-family: "Atlas Grotesk";
+	font-size: 60px;
+	line-height: 60px;
+	margin-bottom: 32px;
 }
 
 #info {
-	-webkit-transition-delay: 300ms;
+	/*-webkit-transition-delay: 300ms;*/
 }
 
 #random-btn {
-	-webkit-transition-delay: 600ms;
+	-webkit-transition-delay: 300ms;
 }
 
 #info-btn {
-	-webkit-transition-delay: 700ms;
+	-webkit-transition-delay: 400ms;
 }
 
 #play-btn {
-	-webkit-transition-delay: 500ms;
+	-webkit-transition-delay: 200ms;
 }
 
 #next-btn {
-	-webkit-transition-delay: 900ms;
+	-webkit-transition-delay: 600ms;
 }
 
 #prev-btn {
-	-webkit-transition-delay: 900ms;
+	-webkit-transition-delay: 600ms;
 }
 
-h1 svg {
+/*h1 svg {
   stroke-dasharray: 7000;
   stroke-dashoffset: 7000;
   animation: dash 5s linear forwards;
@@ -90,11 +100,7 @@ h1 svg {
   to {
     stroke-dashoffset: 0;
   }
-}
-
-body.woop #info {
-	transform: matrix(1, 0, 0, 1, 0, 50);
-}
+}*/
 
 body.woop #info,
 body.woop h1,
@@ -130,17 +136,69 @@ body.woop #pause-btn {
 
 #about,
 #contact {
-	display: none;
 	position: absolute;
-	height: 100%;
-	width: 100%;
-	background-color: #fff;
-	opacity: 0.9;
-	z-index: 8;
-	color: #000;
-	font-size: 3em;
-	padding: 100px;
-	box-sizing: border-box;
+	top: 0;
+	bottom: 0;
+	width: 60%;
+    left: -60%;
+    background-color: #555a5e;
+    line-height: 24px;
+    color: #a0a5a8;
+    -webkit-transition: all 600ms ease;
+    -moz-transition: all 600ms ease;
+    -ms-transition: all 600ms ease;
+    -o-transition: all 600ms ease;
+    transition: all 600ms ease;
+}
+
+#about:after,
+#contact:after
+{
+    position: absolute;
+    content: 'ABOUT';
+    left: 100%;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+    transform-origin: 0 0;
+    transform: rotateZ(-90deg);
+}
+
+#contact:after {
+    position: absolute;
+    content: 'CONTACT';
+    left: 100%;
+    top: 200px;
+    right: 0;
+    bottom: 0;
+}
+
+#about:hover,
+#contact:hover {
+	left: 0;
+}
+
+#about:hover ~ #video-player,
+#contact:hover ~ #video-player {
+	/*bottom: 0;*/
+    -webkit-transform: translateX(60%);
+    -moz-transform: translateX(60%);
+    -ms-transform: translateX(60%);
+    -o-transform: translateX(60%);
+    transform: translateX(60%);
+}
+
+#about:hover ~ #holder,
+#contact:hover ~ #holder {
+	display: none;
+}
+
+#about p,
+#contact p {
+	margin: 0 21% 0 13%;
+	color: #f5f5f5;
+	font-family: "Atlas Typewriter";
+	font-size: 14px;
 }
 
 #info {
@@ -195,6 +253,27 @@ body.woop h1 {
 	/*display: none;*/
 }
 
+#social {
+	position: absolute;
+	bottom: 0;
+	right: 100px;
+	color: #a0a5a8;
+	fill: currentColor;
+}
+
+#social a {
+	margin: 0 12px;
+}
+
+#social a:hover {
+	color: #333;
+	fill: currentColor;
+}
+
+#social a:last-of-type {
+	margin: 0;
+}
+
 #btns {
 	color: #a0a5a8;
 	width: 300px;
@@ -204,6 +283,7 @@ body.woop h1 {
 	margin-left: -330px;
 	text-align: right;
 	box-sizing: border-box;
+	z-index: 30;
 }
 
 #next-btn {
@@ -239,8 +319,8 @@ body.woop h1 {
 	left: 100px;
 	bottom: 118px;
 	-webkit-transform:translateZ(0);
-	-webkit-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+	-webkit-transition: all 600ms ease;
+	transition: all 600ms ease;
 }
 
 body.woop #video-player {
