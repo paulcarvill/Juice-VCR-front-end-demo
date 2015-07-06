@@ -6,7 +6,7 @@ html, body, h1, h2, p, div {
 }
 
 body {
-	background: #555a5e url(/assets/img/bg.gif);
+	background: #555a5e url(../img/bg.gif);
 	border-left: 40px solid #555a5e;
 	border-bottom: 40px solid #555a5e;
 	overflow-x: hidden;
