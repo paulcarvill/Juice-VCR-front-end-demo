@@ -25,6 +25,103 @@ a:hover {
 	text-decoration: underline;
 }
 
+#holder {
+	z-index: 20;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#holder,
+#info,
+h1,
+#holder,
+#next-btn,
+#prev-btn,
+#random-btn,
+#info-btn,
+#play-btn,
+#pause-btn {
+	transform: scale(1);
+	visibility: visible;
+	opacity: 1;
+	transition-duration: 400ms;
+	transition-property: transform, visibility, opacity;
+	transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+h1 {
+	-webkit-transition-delay: 300ms;
+}
+
+#info {
+	-webkit-transition-delay: 300ms;
+}
+
+#random-btn {
+	-webkit-transition-delay: 600ms;
+}
+
+#info-btn {
+	-webkit-transition-delay: 700ms;
+}
+
+#play-btn {
+	-webkit-transition-delay: 500ms;
+}
+
+#next-btn {
+	-webkit-transition-delay: 900ms;
+}
+
+#prev-btn {
+	-webkit-transition-delay: 900ms;
+}
+
+h1 svg {
+  stroke-dasharray: 7000;
+  stroke-dashoffset: 7000;
+  animation: dash 5s linear forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+body.woop #info {
+	transform: matrix(1, 0, 0, 1, 0, 50);
+}
+
+body.woop #info,
+body.woop h1,
+body.woop #holder,
+body.woop #next-btn,
+body.woop #prev-btn,
+body.woop #random-btn,
+body.woop #info-btn,
+body.woop #play-btn,
+body.woop #pause-btn {
+	opacity: 0;
+	transform: scale(2);
+	visibility: hidden;
+	overflow: hidden;
+}
+
+body.woop #info,
+body.woop h1,
+body.woop #next-btn,
+body.woop #prev-btn,
+body.woop #random-btn,
+body.woop #info-btn,
+body.woop #play-btn,
+body.woop #pause-btn {
+	transform: scale(4);
+}
+
 #vid1 {
 	position: absolute;
 	top: 0;
@@ -61,8 +158,7 @@ h1 {
 	z-index: 20;
 	bottom: 260px;
 	left: 40px;
-	color: #fff;
-	fill: currentColor;
+
 }
 
 #next-btn,
@@ -86,6 +182,17 @@ h1 {
 	color: #333;
 	fill: currentColor;
 	cursor: pointer;
+}
+
+body.woop #next-btn,
+body.woop #prev-btn,
+body.woop #random-btn,
+body.woop #info-btn,
+body.woop #play-btn,
+body.woop #pause-btn,
+body.woop #info,
+body.woop h1 {
+	/*display: none;*/
 }
 
 #btns {
@@ -136,7 +243,7 @@ h1 {
 	transition: all 0.3s ease;
 }
 
-#video-player.woop {
+body.woop #video-player {
 	left: 0;
 	bottom: 0;
 }
