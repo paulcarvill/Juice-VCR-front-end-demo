@@ -12,18 +12,13 @@ body {
 	overflow: hidden;
 }
 
-/* don't allow pausing the video by clicking directly on it */
-iframe {
-/*	pointer-events: none;*/
+.iframeblocker {
+	z-index: 50;
 }
 
 a {
 	color: #a0a5a8;
 	text-decoration: none;
-}
-
-a:hover {
-	/*text-decoration: underline;*/
 }
 
 form {

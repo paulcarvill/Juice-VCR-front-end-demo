@@ -338,13 +338,13 @@
       e.preventDefault();
     });
 
-    addEventListener(this.iframeblocker, 'click', function(/*e*/) {
-      if(self.paused()) {
-        self.play();
-      } else {
-        self.pause();
-      }
-    });
+    // addEventListener(this.iframeblocker, 'click', function(/*e*/) {
+    //   if(self.paused()) {
+    //     self.play();
+    //   } else {
+    //     self.pause();
+    //   }
+    // });
 
     this.playerEl_.insertBefore(this.iframeblocker, this.el_.nextSibling);
   };

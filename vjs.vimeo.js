@@ -1,1 +1,581 @@
-var VimeoState={UNSTARTED:-1,ENDED:0,PLAYING:1,PAUSED:2,BUFFERING:3};videojs.Vimeo=videojs.MediaTechController.extend({init:function(e,o,t){if(videojs.MediaTechController.call(this,e,o,t),"undefined"!=typeof o.source)for(var i in o.source)e.options()[i]=o.source[i];this.player_=e,this.player_el_=document.getElementById(this.player_.id()),this.player_.controls(!1),this.id_=this.player_.id()+"_vimeo_api",this.el_=videojs.Component.prototype.createEl("iframe",{id:this.id_,className:"vjs-tech",scrolling:"no",marginWidth:0,marginHeight:0,frameBorder:0,webkitAllowFullScreen:"true",mozallowfullscreen:"true",allowFullScreen:"true"}),this.player_el_.insertBefore(this.el_,this.player_el_.firstChild);var n="file:"===document.location.protocol?"http:":document.location.protocol;this.baseUrl=n+"//player.vimeo.com/video/",this.vimeo={},this.vimeoInfo={};var r=this;this.el_.onload=function(){r.onLoad()},this.startMuted=e.options().muted,this.src(e.options().src)}}),videojs.Vimeo.prototype.dispose=function(){this.vimeo.removeEvent("ready"),this.vimeo.api("unload"),delete this.vimeo,this.el_.parentNode.removeChild(this.el_),videojs.MediaTechController.prototype.dispose.call(this)},videojs.Vimeo.prototype.src=function(e){this.isReady_=!1;var o=/^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/,t=e.match(o);t&&(this.videoId=t[5]);var i={api:1,byline:0,portrait:0,show_title:0,show_byline:0,show_portait:0,fullscreen:1,player_id:this.id_,autoplay:this.player_.options().autoplay?1:0,loop:this.player_.options().loop?1:0,color:this.player_.options().color||""};"#"===i.color.substring(0,1)&&(i.color=i.color.substring(1)),this.el_.src=this.baseUrl+this.videoId+"?"+videojs.Vimeo.makeQueryString(i)},videojs.Vimeo.prototype.load=function(){},videojs.Vimeo.prototype.play=function(){this.vimeo.api("play")},videojs.Vimeo.prototype.pause=function(){this.vimeo.api("pause")},videojs.Vimeo.prototype.paused=function(){return this.vimeoInfo.state!==VimeoState.PLAYING&&this.vimeoInfo.state!==VimeoState.BUFFERING},videojs.Vimeo.prototype.currentTime=function(){return this.vimeoInfo.time||0},videojs.Vimeo.prototype.setCurrentTime=function(e){this.vimeo.api("seekTo",e),this.player_.trigger("timeupdate")},videojs.Vimeo.prototype.duration=function(){return this.vimeoInfo.duration||0},videojs.Vimeo.prototype.buffered=function(){return videojs.createTimeRange(0,this.vimeoInfo.buffered*this.vimeoInfo.duration||0)},videojs.Vimeo.prototype.volume=function(){return this.vimeoInfo.muted?this.vimeoInfo.muteVolume:this.vimeoInfo.volume},videojs.Vimeo.prototype.setVolume=function(e){this.vimeo.api("setvolume",e),this.vimeoInfo.volume=e,this.player_.trigger("volumechange")},videojs.Vimeo.prototype.currentSrc=function(){return this.el_.src},videojs.Vimeo.prototype.muted=function(){return this.vimeoInfo.muted||!1},videojs.Vimeo.prototype.setMuted=function(e){e?(this.vimeoInfo.muteVolume=this.vimeoInfo.volume,this.setVolume(0)):this.setVolume(this.vimeoInfo.muteVolume),this.vimeoInfo.muted=e,this.player_.trigger("volumechange")},videojs.Vimeo.prototype.onReady=function(){this.isReady_=!0,this.triggerReady(),this.player_.trigger("loadedmetadata"),this.startMuted&&(this.setMuted(!0),this.startMuted=!1)},videojs.Vimeo.prototype.onLoad=function(){this.vimeo&&this.vimeo.api&&(this.vimeo.api("unload"),delete this.vimeo),this.vimeo=$f(this.el_),this.vimeoInfo={state:VimeoState.UNSTARTED,volume:1,muted:!1,muteVolume:1,time:0,duration:0,buffered:0,url:this.baseUrl+this.videoId,error:null};var e=this;this.vimeo.addEvent("ready",function(){e.onReady(),e.vimeo.addEvent("loadProgress",function(o){e.onLoadProgress(o)}),e.vimeo.addEvent("playProgress",function(o){e.onPlayProgress(o)}),e.vimeo.addEvent("play",function(){e.onPlay()}),e.vimeo.addEvent("pause",function(){e.onPause()}),e.vimeo.addEvent("finish",function(){e.onFinish()}),e.vimeo.addEvent("seek",function(o){e.onSeek(o)})})},videojs.Vimeo.prototype.onLoadProgress=function(e){var o=!this.vimeoInfo.duration;this.vimeoInfo.duration=e.duration,this.vimeoInfo.buffered=e.percent,this.player_.trigger("progress"),o&&this.player_.trigger("durationchange")},videojs.Vimeo.prototype.onPlayProgress=function(e){this.vimeoInfo.time=e.seconds,this.player_.trigger("timeupdate")},videojs.Vimeo.prototype.onPlay=function(){this.vimeoInfo.state=VimeoState.PLAYING,this.player_.trigger("play")},videojs.Vimeo.prototype.onPause=function(){this.vimeoInfo.state=VimeoState.PAUSED,this.player_.trigger("pause")},videojs.Vimeo.prototype.onFinish=function(){this.vimeoInfo.state=VimeoState.ENDED,this.player_.trigger("ended")},videojs.Vimeo.prototype.onSeek=function(e){this.vimeoInfo.time=e.seconds,this.player_.trigger("timeupdate"),this.player_.trigger("seeked")},videojs.Vimeo.prototype.onError=function(e){this.player_.error=e,this.player_.trigger("error")},videojs.Vimeo.isSupported=function(){return!0},videojs.Vimeo.prototype.supportsFullScreen=function(){return!1},videojs.Vimeo.canPlaySource=function(e){return"video/vimeo"==e.type},videojs.Vimeo.makeQueryString=function(e){var o=[];for(var t in e)e.hasOwnProperty(t)&&o.push(encodeURIComponent(t)+"="+encodeURIComponent(e[t]));return o.join("&")};var Froogaloop=function(){function e(o){return new e.fn.init(o)}function o(e,o,t){if(!t.contentWindow.postMessage)return!1;var i=JSON.stringify({method:e,value:o});t.contentWindow.postMessage(i,l)}function t(e){var o,t;try{o=JSON.parse(e.data),t=o.event||o.method}catch(i){}if("ready"!=t||u||(u=!0),!/^https?:\/\/player.vimeo.com/.test(e.origin))return!1;"*"===l&&(l=e.origin);var r=o.value,s=o.data,a=""===a?null:o.player_id,d=n(t,a),m=[];return d?(void 0!==r&&m.push(r),s&&m.push(s),a&&m.push(a),m.length>0?d.apply(null,m):d.call()):!1}function i(e,o,t){t?(a[t]||(a[t]={}),a[t][e]=o):a[e]=o}function n(e,o){return o&&a[o]?a[o][e]:a[e]}function r(e,o){if(o&&a[o]){if(!a[o][e])return!1;a[o][e]=null}else{if(!a[e])return!1;a[e]=null}return!0}function s(e){return!!(e&&e.constructor&&e.call&&e.apply)}var a={},u=!1,l=(Array.prototype.slice,"*");return e.fn=e.prototype={element:null,init:function(e){return"string"==typeof e&&(e=document.getElementById(e)),this.element=e,this},api:function(e,t){if(!this.element||!e)return!1;var n=this,r=n.element,a=""!==r.id?r.id:null,u=s(t)?null:t,l=s(t)?t:null;return l&&i(e,l,a),o(e,u,r),n},addEvent:function(e,t){if(!this.element)return!1;var n=this,r=n.element,s=""!==r.id?r.id:null;return i(e,t,s),"ready"!=e?o("addEventListener",e,r):"ready"==e&&u&&t.call(null,s),n},removeEvent:function(e){if(!this.element)return!1;var t=this,i=t.element,n=""!==i.id?i.id:null,s=r(e,n);"ready"!=e&&s&&o("removeEventListener",e,i)}},e.fn.init.prototype=e.fn,window.addEventListener?window.addEventListener("message",t,!1):window.attachEvent("onmessage",t),window.Froogaloop=window.$f=e}();
+/**
+ * @fileoverview Vimeo Media Controller - Wrapper for Vimeo Media API
+ */
+
+var VimeoState = {
+  UNSTARTED: -1,
+  ENDED: 0,
+  PLAYING: 1,
+  PAUSED: 2,
+  BUFFERING: 3
+};
+
+/**
+ * Vimeo Media Controller - Wrapper for Vimeo Media API
+ * @param {videojs.Player|Object} player
+ * @param {Object=} options
+ * @param {Function=} ready
+ * @constructor
+ */
+videojs.Vimeo = videojs.MediaTechController.extend({
+  init: function(player, options, ready){
+    videojs.MediaTechController.call(this, player, options, ready);
+
+    // Copy the JavaScript options if they exists
+    if (typeof options['source'] != 'undefined') {
+        for (var key in options['source']) {
+            player.options()[key] = options['source'][key];
+        }
+    }
+
+    this.player_ = player;
+    this.player_el_ = document.getElementById(this.player_.id());
+
+    // Disable lockShowing because we always use Vimeo controls
+    this.player_.controls(false);
+
+    this.id_ = this.player_.id() + '_vimeo_api';
+
+    this.el_ = videojs.Component.prototype.createEl('iframe', {
+      id: this.id_,
+      className: 'vjs-tech',
+      scrolling: 'no',
+      marginWidth: 0,
+      marginHeight: 0,
+      frameBorder: 0,
+      webkitAllowFullScreen: 'true',
+      mozallowfullscreen: 'true',
+      allowFullScreen: 'true'
+    });
+
+    this.player_el_.insertBefore(this.el_, this.player_el_.firstChild);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    videojs.Vimeo.prototype.addIframeBlocker = function(ieVersion) {
+	    this.iframeblocker = videojs.Component.prototype.createEl('div');
+
+	    this.iframeblocker.className = 'iframeblocker';
+
+	    this.iframeblocker.style.position = 'absolute';
+	    this.iframeblocker.style.left = 0;
+	    this.iframeblocker.style.right = 0;
+	    this.iframeblocker.style.top = 0;
+	    this.iframeblocker.style.bottom = 0;
+
+	    // Odd quirk for IE8 (doesn't support rgba)
+	    if(ieVersion && ieVersion < 9) {
+	      this.iframeblocker.style.opacity = 0.01;
+	    } else {
+	      this.iframeblocker.style.background = 'rgba(255, 255, 255, 0.01)';
+	    }
+
+	    var self = this;
+	    addEventListener(this.iframeblocker, 'mousemove', function(e) {
+	      if(!self.player_.userActive()) {
+	        self.player_.userActive(true);
+	      }
+
+	      e.stopPropagation();
+	      e.preventDefault();
+	    });
+
+	    // addEventListener(this.iframeblocker, 'click', function(/*e*/) {
+	    //   if(self.paused()) {
+	    //     self.play();
+	    //   } else {
+	    //     self.pause();
+	    //   }
+	    // });
+
+	    this.player_el_.insertBefore(this.iframeblocker, this.player_el_.firstChild);
+  	};
+  	this.addIframeBlocker();
+
+
+
+
+
+
+
+
+
+
+
+    var protocol = (document.location.protocol === 'file:')?'http:': document.location.protocol;
+    this.baseUrl = protocol + '//player.vimeo.com/video/';
+
+    this.vimeo = {};
+    this.vimeoInfo = {};
+
+    var self = this;
+    this.el_.onload = function() { self.onLoad(); };
+
+    this.startMuted = player.options()['muted'];
+
+    this.src(player.options()['src']);
+  }
+});
+
+videojs.Vimeo.prototype.dispose = function(){
+  this.vimeo.removeEvent('ready');
+  this.vimeo.api('unload');
+  delete this.vimeo;
+  this.el_.parentNode.removeChild(this.el_);
+
+  videojs.MediaTechController.prototype.dispose.call(this);
+};
+
+videojs.Vimeo.prototype.src = function(src){
+  this.isReady_ = false;
+
+  // Regex that parse the video ID for any Vimeo URL
+  var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+  var match = src.match(regExp);
+
+  if (match){
+    this.videoId = match[5];
+  }
+
+  var params = {
+    api: 1,
+    byline: 0,
+    portrait: 0,
+    show_title: 0,
+    show_byline: 0,
+    show_portait: 0,
+    fullscreen: 1,
+    player_id: this.id_,
+    autoplay: (this.player_.options()['autoplay'])?1:0,
+    loop: (this.player_.options()['loop'])?1:0,
+    color: this.player_.options()['color'] || ''
+  };
+
+  if (params.color.substring(0, 1) === '#') {
+    // vimeo API takes color without the hash
+    params.color = params.color.substring(1);
+  }
+
+  this.el_.src = this.baseUrl + this.videoId + '?' + videojs.Vimeo.makeQueryString(params);
+};
+
+videojs.Vimeo.prototype.load = function(){};
+videojs.Vimeo.prototype.play = function(){ this.vimeo.api('play'); };
+videojs.Vimeo.prototype.pause = function(){ this.vimeo.api('pause'); };
+videojs.Vimeo.prototype.paused = function(){
+  return this.vimeoInfo.state !== VimeoState.PLAYING &&
+         this.vimeoInfo.state !== VimeoState.BUFFERING;
+};
+
+videojs.Vimeo.prototype.currentTime = function(){ return this.vimeoInfo.time || 0; };
+
+videojs.Vimeo.prototype.setCurrentTime = function(seconds){
+  this.vimeo.api('seekTo', seconds);
+  this.player_.trigger('timeupdate');
+};
+
+videojs.Vimeo.prototype.duration = function(){ return this.vimeoInfo.duration || 0; };
+videojs.Vimeo.prototype.buffered = function(){ return videojs.createTimeRange(0, (this.vimeoInfo.buffered*this.vimeoInfo.duration) || 0); };
+
+videojs.Vimeo.prototype.volume = function() { return (this.vimeoInfo.muted)? this.vimeoInfo.muteVolume : this.vimeoInfo.volume; };
+videojs.Vimeo.prototype.setVolume = function(percentAsDecimal){
+  this.vimeo.api('setvolume', percentAsDecimal);
+  this.vimeoInfo.volume = percentAsDecimal;
+  this.player_.trigger('volumechange');
+};
+videojs.Vimeo.prototype.currentSrc = function() {
+  return this.el_.src;
+};
+videojs.Vimeo.prototype.muted = function() { return this.vimeoInfo.muted || false; };
+videojs.Vimeo.prototype.setMuted = function(muted) {
+  if (muted) {
+    this.vimeoInfo.muteVolume = this.vimeoInfo.volume;
+    this.setVolume(0);
+  } else {
+    this.setVolume(this.vimeoInfo.muteVolume);
+  }
+
+  this.vimeoInfo.muted = muted;
+  this.player_.trigger('volumechange');
+};
+
+videojs.Vimeo.prototype.onReady = function(){
+  this.isReady_ = true;
+  this.triggerReady();
+  this.player_.trigger('loadedmetadata');
+  if (this.startMuted) {
+    this.setMuted(true);
+    this.startMuted = false;
+  }
+};
+
+videojs.Vimeo.prototype.onLoad = function(){
+  if (this.vimeo && this.vimeo.api) {
+    this.vimeo.api('unload');
+    delete this.vimeo;
+  }
+
+  this.vimeo = $f(this.el_);
+
+  this.vimeoInfo = {
+    state: VimeoState.UNSTARTED,
+    volume: 1,
+    muted: false,
+    muteVolume: 1,
+    time: 0,
+    duration: 0,
+    buffered: 0,
+    url: this.baseUrl + this.videoId,
+    error: null
+  };
+
+  var self = this;
+  this.vimeo.addEvent('ready', function(id){
+    self.onReady();
+
+    self.vimeo.addEvent('loadProgress', function(data, id){ self.onLoadProgress(data); });
+    self.vimeo.addEvent('playProgress', function(data, id){ self.onPlayProgress(data); });
+    self.vimeo.addEvent('play', function(id){ self.onPlay(); });
+    self.vimeo.addEvent('pause', function(id){ self.onPause(); });
+    self.vimeo.addEvent('finish', function(id){ self.onFinish(); });
+    self.vimeo.addEvent('seek', function(data, id){ self.onSeek(data); });
+
+  });
+};
+
+videojs.Vimeo.prototype.onLoadProgress = function(data){
+  var durationUpdate = !this.vimeoInfo.duration;
+  this.vimeoInfo.duration = data.duration;
+  this.vimeoInfo.buffered = data.percent;
+  this.player_.trigger('progress');
+  if (durationUpdate) this.player_.trigger('durationchange');
+};
+
+videojs.Vimeo.prototype.onPlayProgress = function(data){
+  this.vimeoInfo.time = data.seconds;
+  this.player_.trigger('timeupdate');
+};
+
+videojs.Vimeo.prototype.onPlay = function(){
+  this.vimeoInfo.state = VimeoState.PLAYING;
+  this.player_.trigger('play');
+};
+
+videojs.Vimeo.prototype.onPause = function(){
+  this.vimeoInfo.state = VimeoState.PAUSED;
+  this.player_.trigger('pause');
+};
+
+videojs.Vimeo.prototype.onFinish = function(){
+  this.vimeoInfo.state = VimeoState.ENDED;
+  this.player_.trigger('ended');
+};
+
+videojs.Vimeo.prototype.onSeek = function(data){
+  this.vimeoInfo.time = data.seconds;
+  this.player_.trigger('timeupdate');
+  this.player_.trigger('seeked');
+};
+
+videojs.Vimeo.prototype.onError = function(error){
+  this.player_.error = error;
+  this.player_.trigger('error');
+};
+
+videojs.Vimeo.isSupported = function(){
+  return true;
+};
+
+videojs.Vimeo.prototype.supportsFullScreen = function() {
+  return false;
+};
+
+videojs.Vimeo.canPlaySource = function(srcObj){
+  return (srcObj.type == 'video/vimeo');
+};
+
+videojs.Vimeo.makeQueryString = function(args){
+  var array = [];
+  for (var key in args){
+    if (args.hasOwnProperty(key)){
+      array.push(encodeURIComponent(key) + '=' + encodeURIComponent(args[key]));
+    }
+  }
+
+  return array.join('&');
+};
+
+// Froogaloop API -------------------------------------------------------------
+
+// From https://github.com/vimeo/player-api/blob/master/javascript/froogaloop.js
+// Init style shamelessly stolen from jQuery http://jquery.com
+var Froogaloop = (function(){
+    // Define a local copy of Froogaloop
+    function Froogaloop(iframe) {
+        // The Froogaloop object is actually just the init constructor
+        return new Froogaloop.fn.init(iframe);
+    }
+
+    var eventCallbacks = {},
+        hasWindowEvent = false,
+        isReady = false,
+        slice = Array.prototype.slice,
+        playerOrigin = '*';
+
+    Froogaloop.fn = Froogaloop.prototype = {
+        element: null,
+
+        init: function(iframe) {
+            if (typeof iframe === "string") {
+                iframe = document.getElementById(iframe);
+            }
+
+            this.element = iframe;
+
+            return this;
+        },
+
+        /*
+         * Calls a function to act upon the player.
+         *
+         * @param {string} method The name of the Javascript API method to call. Eg: 'play'.
+         * @param {Array|Function} valueOrCallback params Array of parameters to pass when calling an API method
+         *                                or callback function when the method returns a value.
+         */
+        api: function(method, valueOrCallback) {
+            if (!this.element || !method) {
+                return false;
+            }
+
+            var self = this,
+                element = self.element,
+                target_id = element.id !== '' ? element.id : null,
+                params = !isFunction(valueOrCallback) ? valueOrCallback : null,
+                callback = isFunction(valueOrCallback) ? valueOrCallback : null;
+
+            // Store the callback for get functions
+            if (callback) {
+                storeCallback(method, callback, target_id);
+            }
+
+            postMessage(method, params, element);
+            return self;
+        },
+
+        /*
+         * Registers an event listener and a callback function that gets called when the event fires.
+         *
+         * @param eventName (String): Name of the event to listen for.
+         * @param callback (Function): Function that should be called when the event fires.
+         */
+        addEvent: function(eventName, callback) {
+            if (!this.element) {
+                return false;
+            }
+
+            var self = this,
+                element = self.element,
+                target_id = element.id !== '' ? element.id : null;
+
+
+            storeCallback(eventName, callback, target_id);
+
+            // The ready event is not registered via postMessage. It fires regardless.
+            if (eventName != 'ready') {
+                postMessage('addEventListener', eventName, element);
+            }
+            else if (eventName == 'ready' && isReady) {
+                callback.call(null, target_id);
+            }
+
+            return self;
+        },
+
+        /*
+         * Unregisters an event listener that gets called when the event fires.
+         *
+         * @param eventName (String): Name of the event to stop listening for.
+         */
+        removeEvent: function(eventName) {
+            if (!this.element) {
+                return false;
+            }
+
+            var self = this,
+                element = self.element,
+                target_id = element.id !== '' ? element.id : null,
+                removed = removeCallback(eventName, target_id);
+
+            // The ready event is not registered
+            if (eventName != 'ready' && removed) {
+                postMessage('removeEventListener', eventName, element);
+            }
+        }
+    };
+
+    /**
+     * Handles posting a message to the parent window.
+     *
+     * @param method (String): name of the method to call inside the player. For api calls
+     * this is the name of the api method (api_play or api_pause) while for events this method
+     * is api_addEventListener.
+     * @param params (Object or Array): List of parameters to submit to the method. Can be either
+     * a single param or an array list of parameters.
+     * @param target (HTMLElement): Target iframe to post the message to.
+     */
+    function postMessage(method, params, target) {
+        if (!target.contentWindow.postMessage) {
+            return false;
+        }
+
+        var data = JSON.stringify({
+            method: method,
+            value: params
+        });
+
+        target.contentWindow.postMessage(data, playerOrigin);
+    }
+
+    /**
+     * Event that fires whenever the window receives a message from its parent
+     * via window.postMessage.
+     */
+    function onMessageReceived(event) {
+        var data, method;
+
+        try {
+            data = JSON.parse(event.data);
+            method = data.event || data.method;
+        }
+        catch(e)  {
+            //fail silently... like a ninja!
+        }
+
+        if (method == 'ready' && !isReady) {
+            isReady = true;
+        }
+
+        // Handles messages from the vimeo player only
+        if (!(/^https?:\/\/player.vimeo.com/).test(event.origin)) {
+            return false;
+        }
+
+        if (playerOrigin === '*') {
+            playerOrigin = event.origin;
+        }
+
+        var value = data.value,
+            eventData = data.data,
+            target_id = target_id === '' ? null : data.player_id,
+
+            callback = getCallback(method, target_id),
+            params = [];
+
+        if (!callback) {
+            return false;
+        }
+
+        if (value !== undefined) {
+            params.push(value);
+        }
+
+        if (eventData) {
+            params.push(eventData);
+        }
+
+        if (target_id) {
+            params.push(target_id);
+        }
+
+        return params.length > 0 ? callback.apply(null, params) : callback.call();
+    }
+
+
+    /**
+     * Stores submitted callbacks for each iframe being tracked and each
+     * event for that iframe.
+     *
+     * @param eventName (String): Name of the event. Eg. api_onPlay
+     * @param callback (Function): Function that should get executed when the
+     * event is fired.
+     * @param target_id (String) [Optional]: If handling more than one iframe then
+     * it stores the different callbacks for different iframes based on the iframe's
+     * id.
+     */
+    function storeCallback(eventName, callback, target_id) {
+        if (target_id) {
+            if (!eventCallbacks[target_id]) {
+                eventCallbacks[target_id] = {};
+            }
+            eventCallbacks[target_id][eventName] = callback;
+        }
+        else {
+            eventCallbacks[eventName] = callback;
+        }
+    }
+
+    /**
+     * Retrieves stored callbacks.
+     */
+    function getCallback(eventName, target_id) {
+        if (target_id && eventCallbacks[target_id]) {
+            return eventCallbacks[target_id][eventName];
+        }
+        else {
+            return eventCallbacks[eventName];
+        }
+    }
+
+    function removeCallback(eventName, target_id) {
+        if (target_id && eventCallbacks[target_id]) {
+            if (!eventCallbacks[target_id][eventName]) {
+                return false;
+            }
+            eventCallbacks[target_id][eventName] = null;
+        }
+        else {
+            if (!eventCallbacks[eventName]) {
+                return false;
+            }
+            eventCallbacks[eventName] = null;
+        }
+
+        return true;
+    }
+
+    function isFunction(obj) {
+        return !!(obj && obj.constructor && obj.call && obj.apply);
+    }
+
+    function isArray(obj) {
+        return toString.call(obj) === '[object Array]';
+    }
+
+    // Give the init function the Froogaloop prototype for later instantiation
+    Froogaloop.fn.init.prototype = Froogaloop.fn;
+
+    // Listens for the message event.
+    // W3C
+    if (window.addEventListener) {
+        window.addEventListener('message', onMessageReceived, false);
+    }
+    // IE
+    else {
+        window.attachEvent('onmessage', onMessageReceived);
+    }
+
+    // Expose froogaloop to the global object
+    return (window.Froogaloop = window.$f = Froogaloop);
+
+})();

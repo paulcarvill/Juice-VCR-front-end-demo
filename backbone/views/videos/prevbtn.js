@@ -4,10 +4,6 @@ JuiceVCR.Views.PrevButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      currentVideoIndex -= 1;
-      if(currentVideoIndex === -1){
-      	currentVideoIndex = window.JuiceVCR.data.length-1;
-      }
-      myPlayer1.src({ type: window.JuiceVCR.data[currentVideoIndex].videotype, src: window.JuiceVCR.data[currentVideoIndex].videourl });
+      window.app.skipVidBack();
     }
 })

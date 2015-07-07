@@ -4,10 +4,10 @@ JuiceVCR.Views.InfoButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      if (!myPlayer1.videoIsFullscreen) {
-        myPlayer1.requestFullscreen();
+      if (!window.app.videoPlayer.videoIsFullscreen) {
+        window.app.videoPlayer.requestFullscreen();
       } else {
-        myPlayer1.exitFullScreen();
+        window.app.videoPlayer.exitFullScreen();
       }
     }
 })

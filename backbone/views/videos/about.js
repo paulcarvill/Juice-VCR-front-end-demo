@@ -10,7 +10,7 @@ JuiceVCR.Views.AboutView = Backbone.View.extend({
 
 	doClick: function(){
 		this.display();
-		myPlayer1.userActive(true);
+		window.app.videoPlayer.userActive(true);
 	}
 
 })

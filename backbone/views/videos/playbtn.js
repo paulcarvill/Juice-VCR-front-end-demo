@@ -9,14 +9,13 @@ JuiceVCR.Views.PlayButtonView = Backbone.View.extend({
       if(this.playing){
       	this.playing = false;
       	$(this.el).text('play');
-      	myPlayer1.pause();
+      	window.app.videoPlayer.pause();
         $('.woop').removeClass('woop');
 
       } else {
       	this.playing = true;
       	$(this.el).text('pause');
-      	myPlayer1.play();
-        $('#video-player').addClass('woop');
+      	window.app.videoPlayer.play();
       }
     }
 })
