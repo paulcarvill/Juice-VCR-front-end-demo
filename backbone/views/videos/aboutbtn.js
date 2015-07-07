@@ -5,8 +5,6 @@ JuiceVCR.Views.AboutButtonView = Backbone.View.extend({
 
     doclick: function(){
       window.about.display();
-      $(window).unbind('mousemove', mousetimer);
-      $('body').addClass('woop');
-      clearTimeout(timeout);
+      myPlayer1.userActive(false);
     }
 })

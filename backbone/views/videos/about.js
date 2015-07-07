@@ -9,9 +9,8 @@ JuiceVCR.Views.AboutView = Backbone.View.extend({
 	},
 
 	doClick: function(){
-		$(this.el).toggleClass('mesh');
-		$('body').removeClass('woop');
-      	$(window).mousemove(mousetimer);
+		this.display();
+		myPlayer1.userActive(true);
 	}
 
 })

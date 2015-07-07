@@ -14,7 +14,7 @@ body {
 
 /* don't allow pausing the video by clicking directly on it */
 iframe {
-	pointer-events: none;
+/*	pointer-events: none;*/
 }
 
 a {
@@ -65,16 +65,6 @@ label svg {
 	vertical-align: top;
 }
 
-#holder {
-	z-index: 20;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
-
-#holder,
 #info,
 h1,
 #holder,
@@ -83,7 +73,11 @@ h1,
 #random-btn,
 #info-btn,
 #play-btn,
-#pause-btn {
+#pause-btn,
+#box1,
+#box2,
+#box3,
+#social {
 	transform: scale(1);
 	visibility: visible;
 	opacity: 1;
@@ -154,7 +148,11 @@ body.woop #prev-btn,
 body.woop #random-btn,
 body.woop #info-btn,
 body.woop #play-btn,
-body.woop #pause-btn {
+body.woop #pause-btn,
+body.woop #box1,
+body.woop #box2,
+body.woop #box3,
+body.woop #social {
 	opacity: 0;
 	transform: scale(2);
 	visibility: hidden;
@@ -230,8 +228,8 @@ body.woop #pause-btn {
 h1 {
 	position: absolute;
 	z-index: 20;
-	top: 0;
-	left: 20px;
+	top: 16px;
+	left: 8px;
 
 }
 
@@ -241,7 +239,7 @@ h1 {
 #info-btn,
 #play-btn,
 #pause-btn {
-	z-index: 20;
+	z-index: 35;
 	position: absolute;
 	color: #fff;
 	fill: currentColor;
@@ -262,6 +260,7 @@ h1 {
 	position: absolute;
 	bottom: 0;
 	right: 20px;
+	z-index: 35;
 }
 
 #social a {
@@ -347,20 +346,37 @@ h1 {
 
 .vjs-progress-control {
 	display: block !important;
-	left: 5px !important;
+	left: 0px !important;
 	transform-origin: 0 0;
 	transform: rotate(90deg);
-	height: 0.5em !important;
+	height: 2px !important;
+	top: 0 !important;
 }
 
 .vjs-control-bar {
 	bottom: auto !important;
 	visibility: visible !important;
 	opacity: 1 !important;
-	left: 20px !important;
-	top: 62px !important;
+	left: 12px !important;
+	top: 65px !important;
+}
+
+.vjs-default-skin .vjs-control-bar {
+	background-color: transparent !important;
 }
 
 .vjs-play-progress {
 	background: #fff !important;
+}
+
+.vjs-user-inactive .vjs-control-bar {
+	display: none !important;
+}
+
+.vjs-user-active .vjs-control-bar {
+	display: block !important;
+}
+
+.vjs-default-skin .vjs-slider {
+	background-color: rgba(255, 255, 255, 0.5) !important;
 }
