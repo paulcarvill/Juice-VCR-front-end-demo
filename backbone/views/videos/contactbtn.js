@@ -4,7 +4,9 @@ JuiceVCR.Views.ContactButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      console.log('clicked. show contact panel');
-      $('#contact').toggle();
+      window.contact.display();
+      $(window).unbind('mousemove', mousetimer);
+      $('body').addClass('woop');
+      clearTimeout(timeout);
     }
 })

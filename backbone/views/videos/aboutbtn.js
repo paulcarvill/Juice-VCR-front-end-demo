@@ -4,7 +4,9 @@ JuiceVCR.Views.AboutButtonView = Backbone.View.extend({
     },
 
     doclick: function(){
-      console.log('clicked. show about panel');
-      $('#about').toggle();
+      window.about.display();
+      $(window).unbind('mousemove', mousetimer);
+      $('body').addClass('woop');
+      clearTimeout(timeout);
     }
 })
