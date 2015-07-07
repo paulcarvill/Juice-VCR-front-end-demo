@@ -67,8 +67,6 @@
 			</p>
 
 			<div id="info">
-				<p>NOW PLAYING</p>
-				<p>&lt; <span id="artist">artist</span> / <span id="label">label</span> / <span id="publisher">publisher</span> &gt;</p>
 			</div>
 
 			<!-- juice logo -->
@@ -222,10 +220,6 @@
 		<script src="vjs.youtube.js"></script>
 		<script src="backbone/models/video.js"></script>
 		<script src="backbone/routers/router.js"></script>
-		<!--<script src="backbone/templates/videos/new.html"></script>
-		<script src="backbone/templates/videos/next.html"></script>
-		<script src="backbone/templates/videos/shit.html"></script>
-		<script src="backbone/templates/videos/show.html"></script>-->
 		<script src="backbone/views/videos/aboutbtn.js"></script>
 		<script src="backbone/views/videos/contactbtn.js"></script>
 		<script src="backbone/views/videos/nextbtn.js"></script>
@@ -233,10 +227,17 @@
 		<script src="backbone/views/videos/randbtn.js"></script>
 		<script src="backbone/views/videos/infobtn.js"></script>
 		<script src="backbone/views/videos/playbtn.js"></script>
+		<script src="backbone/views/videos/infopane.js"></script>
 		<script src="backbone/views/videos/contact.js"></script>
 		<script src="backbone/views/videos/about.js"></script>
 		<script src="backbone/views/videos/heading.js"></script>
 		<script src="backbone/views/videos/show.js"></script>
+		<script type="text/template" id="video-info-template">
+			<p>NOW PLAYING</p>
+			<p>&lt; <%= tracktitle %> / <%= artist %> &gt;</p>
+			<p>&lt; <%= album %> &gt;</p>
+			<p>&lt; <%= label %> / <%= publisher %> &gt;</p>
+		</script>
 		<script type="text/javascript">
 		$(function() {
 			window.heading = new JuiceVCR.Views.ShowView( { el : $('h1') });
@@ -248,7 +249,16 @@
 			window.contact = new JuiceVCR.Views.ContactView( { el : $('#contact') });
 			window.random = new JuiceVCR.Views.RandomButtonView( { el : $('#random-btn') });
 			window.play = new JuiceVCR.Views.PlayButtonView( { el : $('#play-btn') });
-			window.info = new JuiceVCR.Views.InfoButtonView( { el : $('#info-btn') });
+			window.info_btn = new JuiceVCR.Views.InfoButtonView( { el : $('#info-btn') });
+			window.infopane = new JuiceVCR.Views.InfoView( { el : $('#info'), model: {
+				"tracktitle" : "This Is The Track Title",
+				"artist" : "This Is The Artist Name",
+				"label" : "This Is The Label Name",
+				"publisher" : "This Is The Publisher Name",
+				"album" : "This Is The Album Title",
+			} });
+
+
 			Backbone.history.start( { pushState : true });
 
 			myPlayer1 = videojs('vid1', {
