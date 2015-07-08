@@ -19,7 +19,17 @@ JuiceVCR.Views.AppView = Backbone.View.extend({
 			src: this.vid.get('videourl'),
 			techOrder: ["youtube", "vimeo"],
 			autoplay: true,
-			inactivityTimeout: 3000
+			inactivityTimeout: 3000,
+			controls: false,
+			children: {
+    			controlBar: false,
+    			posterImage: false,
+    			bigPlayButton: false,
+    			loadingSpinner: false,
+    			textTrackDisplay: false,
+    			errorDisplay: false,
+    			captionSettings: false
+    		}
 		});
 
 		this.infopane = new JuiceVCR.Views.InfoView( { el : $('#info'), model: this.vid.toJSON() });

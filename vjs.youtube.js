@@ -155,7 +155,7 @@
         }
 
         // Remove the poster
-        this.playerEl_.querySelectorAll('.vjs-poster')[0].style.backgroundImage = 'none';
+        //this.playerEl_.querySelectorAll('.vjs-poster')[0].style.backgroundImage = 'none';
 
         // If still connected to the DOM, remove it.
         if(this.el_.parentNode) {
@@ -412,12 +412,12 @@
         }
 
         var self = this;
-        this.loadThumbnailUrl(this.videoId, function(url){
-            // Update the poster
-            self.playerEl_.querySelectorAll('.vjs-poster')[0].style.backgroundImage =
-              'url(' + url + ')';
-            self.player_.poster(url);
-        });
+        // this.loadThumbnailUrl(this.videoId, function(url){
+        //     // Update the poster
+        //     self.playerEl_.querySelectorAll('.vjs-poster')[0].style.backgroundImage =
+        //       'url(' + url + ')';
+        //     self.player_.poster(url);
+        // });
       }
       /* else Invalid URL */
     }
@@ -658,8 +658,8 @@
     this.isReady_ = true;
     this.triggerReady();
 
-    this.player_.options()['playbackRates'] = this.ytplayer.getAvailablePlaybackRates();
-    this.player_.controlBar.playbackRateMenuButton.update();
+    //this.player_.options()['playbackRates'] = this.ytplayer.getAvailablePlaybackRates();
+    //this.player_.controlBar.playbackRateMenuButton.update();
 
     this.player_.trigger('loadedmetadata');
 
@@ -822,7 +822,7 @@
           break;
 
         case YT.PlayerState.PLAYING:
-          this.playerEl_.querySelectorAll('.vjs-poster')[0].style.display = 'none';
+          //this.playerEl_.querySelectorAll('.vjs-poster')[0].style.display = 'none';
 
           this.playVideoIsAllowed = true;
           this.updateQualities();
