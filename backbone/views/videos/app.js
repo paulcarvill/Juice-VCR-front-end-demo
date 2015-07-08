@@ -3,7 +3,7 @@ JuiceVCR.Views.AppView = Backbone.View.extend({
 	currentVideoIndex: 0,
 
 	initialize: function(){
-		_.bindAll(this, 'playVid', 'skipVid');
+		_.bindAll(this, 'playVid', 'skipVid', 'progressUpdate');
 
 		for(var i = 0; i < JuiceVCR.data.length; i++){
 			window.playlist.create(JuiceVCR.data[i]);
@@ -37,6 +37,12 @@ JuiceVCR.Views.AppView = Backbone.View.extend({
 		this.videoPlayer.on('useractive', this.useractive);
 		this.videoPlayer.on('userinactive', this.userinactive);
 		this.videoPlayer.on('ended', this.skipVid);
+		this.videoPlayer.on('timeupdate', this.progressUpdate);
+	},
+
+	progressUpdate: function(e){
+		var percentage = Math.floor((100 / this.videoPlayer.duration()) * this.videoPlayer.currentTime());
+		$('#progress').css('top', percentage + '%')
 	},
 
 	skipVid: function(){

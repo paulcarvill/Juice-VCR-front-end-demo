@@ -20,6 +20,33 @@ iframe {
 	pointer-events: none;
 }
 
+#prog-container,
+#progress
+ {
+	position: absolute;
+	top: 85px;
+	left: 30px;
+	bottom: 0;
+	right: auto;
+	width: 2px;
+	z-index: 500;
+	background: #fff;
+	transition: opacity 600ms ease;
+}
+
+body.woop #prog-container,
+body.woop #progress {
+	opacity: 0;
+}
+
+#progress {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 501;
+	background: #333;
+}
+
 a {
 	color: #a0a5a8;
 	text-decoration: none;
