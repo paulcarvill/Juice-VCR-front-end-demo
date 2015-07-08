@@ -809,7 +809,7 @@
           if (stopPlaying) {
             // Replace YouTube play button by our own
             if(!this.player_.options()['ytcontrols']) {
-              this.playerEl_.querySelectorAll('.vjs-poster')[0].style.display = 'block';
+              //this.playerEl_.querySelectorAll('.vjs-poster')[0].style.display = 'block';
               if(typeof this.player_.bigPlayButton !== 'undefined') {
                 this.player_.bigPlayButton.show();
               }
